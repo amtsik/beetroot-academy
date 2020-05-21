@@ -1,0 +1,51 @@
+-- SELECT * FROM bookstore.books;
+-- SELECT * FROM bookstore.books WHERE author = 'Оруэлл';
+-- SELECT * FROM bookstore.books WHERE genre = 'фантастика' AND born > 1700;
+-- SELECT * FROM bookstore.books WHERE genre = 'фантастика' AND born < 1700;
+-- SELECT author, book FROM bookstore.books WHERE genre = 'фантастика' AND born > 1700;
+-- SELECT author, book, FLOOR ( born / 100 ) + 1 century FROM bookstore.books WHERE genre = 'фантастика' AND born > 1700;
+-- SELECT book FROM bookstore.books WHERE author like '%Оруэл%' AND genre = 'роман';
+-- SELECT * FROM books where author like '%Оруэл%' OR author = 'гомер';
+-- SELECT concat_ws(" ", genre, born) from bookstore.books;
+-- select concat_ws(' ', 'В', born, 'году', author, 'написал книгу “', book, '” в жанре', genre) from bookstore.books
+SET SQL_SAFE_UPDATES = 0;
+-- UPDATE books set rating = 5 WHERE  book like "война и мир";
+-- SELECT * FROM bookstore.books;
+-- SELECT * FROM bookstore.books;
+INSERT INTO books (book, author, born, genre)
+VALUES ("метро 2033" , "Глуховский" , 1985 , "фантастика"),
+("Гарри Поттер", "Роулинг", 1970, "фантастика");
+SELECT * FROM bookstore.books;
+
+-- delete from books where book like "%метро%";
+
+select * from bookstore.books;
+-- INSERT INTO books (book, author, born, genre)
+-- VALUES ("метро 2033" , "Глуховский" , 1985 , "фантастика"),
+-- ("Гарри Поттер", "Роулинг", 1970, "фантастика");
+-- delete from bookstore.books where id = 100 or id = 101;
+delete from bookstore.books where id IN (100, 101);
+
+select * from bookstore.books where author like "%оруэл%"
+
+-- select * from book;
+select book.title, author.name FROM book
+join author on book.author_id = author.id
+where author.name like "%шекспир%";
+
+select b.title, a.name FROM bookstore.book b
+-- left join bookstore.author a on b.author_id = a.id
+-- right join bookstore.author a on b.author_id = a.id
+-- full join bookstore.author a on b.author_id = a.id
+join bookstore.author a on b.author_id = a.id
+where a.name like "%шекспир%";
+
+select b.title, a.name, c.message, c.book_id from bookstore.book b
+join bookstore.author a on b.author_id = a.id
+join commet c on c.book_id = b.id LIMIT 5
+
+-- select b.title, a.name, c.message from bookstore.book b
+-- join bookstore.author a on b.author_id = a.id
+-- inner join commet c on c.book_id = b.id
+-- where c.book_id is null
+

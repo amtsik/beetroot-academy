@@ -1,1 +1,2 @@
 # beetroot-academy
+mySQL parts
