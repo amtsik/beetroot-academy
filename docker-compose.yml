@@ -1,0 +1,75 @@
+version: '3.3'
+#  docker exec -it 0db9361656ae bash
+
+services:
+  db:
+    image: mysql:latest
+    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci','--default-authentication-plugin=mysql_native_password']
+    restart: always
+    environment:
+#      SSH_AUTH_SOCK: /ssh-agent
+#      SSH_USER: user
+#      SSH_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bookstore
+      MYSQL_USER: fs_user
+      MYSQL_PASSWORD: 1234
+#    volumes:
+#      - "./mysql/data:/var/lib/mysql"
+#      - "./docker/mysql/my.cnf:/etc/mysql/conf.d/config-file.cnf:ro"
+    ports:
+      - 3308:3306
+    networks:
+      - internal
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8085:8080
+    links:
+      - db
+    networks:
+      - internal
+
+  php-fpm:
+    build:
+      context: docker/php-fpm
+      args:
+        - USER_ID
+        - GROUP_ID
+        - CHMOD_WWW
+    volumes:
+      - "./www:/var/www"
+      - "./docker/php-fpm/php.ini:/usr/local/etc/php/php.ini"
+    links:
+      - db
+    ports:
+      - 9009:9000
+    environment:
+      XDEBUG_CONFIG: "remote_host=host.docker.internal remote_enable=1 remote_autostart=off  remote_port=9008"
+      PHP_IDE_CONFIG: "serverName=Docker_php"
+      DB_HOST: db
+      DB_ROOT_PASSWORD: root
+      DB_DATABASE: bookstore
+      DB_USER: fs_user
+      DB_PASSWORD: 1234
+    networks:
+      - internal
+
+  nginx:
+    build:
+      context: docker/nginx
+    volumes:
+      - "./www:/var/www"
+      - "./logs/nginx:/var/log/nginx"
+    ports:
+      - 8089:80
+    depends_on:
+      - php-fpm
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: bridge

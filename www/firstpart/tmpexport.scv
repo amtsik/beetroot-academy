@@ -1,0 +1,5 @@
+name,surname,age,gender,avatar,password,email,animals
+Bob,Martin,75,man,https://i.ytimg.com/vi/sDnPs_V8M-c/hqdefault.jpg,ds,email@email,dog
+Alice,Merton,25,woman,https://i.scdn.co/image/d44a5d71596b03b5dc6f5bbcc789458700038951,ds,email@email,"dog,cat"
+Jack,Sparrow,45,man,https://pbs.twimg.com/profile_images/427547618600710144/wCeLVpBa_400x400.jpeg,ds,email@email,
+Angela,Merkel,65,woman,https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Besuch_Bundeskanzlerin_Angela_Merkel_im_Rathaus_K%C3%B6ln-09916.jpg/330px-Besuch_Bundeskanzlerin_Angela_Merkel_im_Rathaus_K%C3%B6ln-09916.jpg,ds,email@email,"dog,parrot,horse"
