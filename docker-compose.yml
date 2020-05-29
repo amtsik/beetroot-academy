@@ -5,6 +5,7 @@ services:
   db:
     image: mysql:latest
     command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci','--default-authentication-plugin=mysql_native_password']
+#    restart: unless-stopped
     restart: always
     environment:
 #      SSH_AUTH_SOCK: /ssh-agent
@@ -45,9 +46,9 @@ services:
     links:
       - db
     ports:
-      - 9009:9000
+      - 9000:9000
     environment:
-      XDEBUG_CONFIG: "remote_host=host.docker.internal remote_enable=1 remote_autostart=off  remote_port=9008"
+      XDEBUG_CONFIG: "remote_host=host.docker.internal remote_enable=1 remote_autostart=off  remote_port=9000"
       PHP_IDE_CONFIG: "serverName=Docker_php"
       DB_HOST: db
       DB_ROOT_PASSWORD: root
@@ -60,16 +61,16 @@ services:
   nginx:
     build:
       context: docker/nginx
+    command: [nginx-debug, '-g', 'daemon off;']
     volumes:
       - "./www:/var/www"
-      - "./logs/nginx:/var/log/nginx"
+#      - "./logs/nginx:/var/log/nginx"
     ports:
       - 8089:80
     depends_on:
       - php-fpm
     networks:
       - internal
-
 networks:
   internal:
     driver: bridge

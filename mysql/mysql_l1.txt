@@ -42,10 +42,10 @@ where a.name like "%шекспир%";
 
 select b.title, a.name, c.message, c.book_id from bookstore.book b
 join bookstore.author a on b.author_id = a.id
-join commet c on c.book_id = b.id LIMIT 5
+join comment c on c.book_id = b.id LIMIT 5
 
 -- select b.title, a.name, c.message from bookstore.book b
 -- join bookstore.author a on b.author_id = a.id
--- inner join commet c on c.book_id = b.id
+-- inner join comment c on c.book_id = b.id
 -- where c.book_id is null
 

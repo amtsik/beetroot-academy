@@ -2,3 +2,9 @@
 vendor
 
 
+.gitignore
+.vagrant/
+Vagrantfile
+dumps/
+environment/
+theme/
