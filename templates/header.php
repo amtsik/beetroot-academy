@@ -11,17 +11,15 @@
     <title>Shop Item - Start Bootstrap Template</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/shop-item.css" rel="stylesheet">
+    <link href="../css/shop-item.css" rel="stylesheet">
 
 </head>
 
 <body>
-
-<?//= $_SERVER['DOCUMENT_URI'] === '/thirdpart/index.php'  ? 'active' : '' ?>
-
 
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -35,15 +33,26 @@
                 <li class="nav-item ">
                 <li class="nav-item <?= $_SERVER['REQUEST_URI'] === '/index.php' ? 'active' : '' ?>">
                     <a class="nav-link"
-                       href="index.php">Home
+                       href="../index.php">Home
                     </a>
                 </li>
                 <li class="nav-item <?= $_SERVER['REQUEST_URI'] === '/page.php' ? 'active' : '' ?>">
                     <a class="nav-link"
-                        href="page.php">
+                        href="../page.php">
                         pagephp
                     </a>
                 </li>
+
+                <li class="nav-item <?= $_SERVER['REQUEST_URI'] === '/page.php' ? 'active' : '' ?>">
+                    <a type="button" class="btn btn-success" href="../cart.php">
+                        Корзина <span class="badge badge-light"><?= getItemsCount() ?></span>
+                        <span class="sr-only">unread messages</span>
+                    </a>
+                </li>
+
+
+
+
 <!--                <li class="nav-item">-->
 <!--                    <a class="nav-link" href="#">Services</a>-->
 <!--                </li>-->

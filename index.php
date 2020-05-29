@@ -7,7 +7,7 @@ $books = getBooks();
 
 ?>
 <!-- Navigation -->
-<?php include_once 'header.php'?>
+<?php include_once './templates/header.php' ?>
 <!-- Page Content -->
 
     <!-- Page Content -->
@@ -88,4 +88,4 @@ $books = getBooks();
     <!--Пагинация-->
 
 
-<?php include_once 'footer.php'; ?>
+<?php include_once './templates/footer.php'; ?>
