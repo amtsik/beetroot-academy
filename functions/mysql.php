@@ -334,15 +334,19 @@ function createOrder(): int
         $pdo->query($sql);
         $orderId = $pdo->lastInsertId();
         $sql = "INSERT INTO order_book (Order_id, book_id, `count`) VALUES (?, ?, ?)";
-        $stmt = $pdo->prepare($sql);
-        foreach ($items as $item) {
-            $stmt ->execute([
-                $orderId,
-                $item['idBook'],
-                $item['count']
-            ]);
+        try {
+            $stmt = $pdo->prepare($sql);
+            foreach ($items as $item) {
+                $stmt ->execute([
+                    $orderId,
+                    $item['idBook'],
+                    $item['count']
+                ]);
+            }
+        } catch (PDOException $e) {
+            var_dump($e['message']);
+            die();
         }
-//        setcookie('cart', '', time() -100, '/');
     }
 
     return $orderId;
@@ -378,16 +382,73 @@ function getData( )
     "amount":"%.2f",
     "currency":"UAH",
     "description":"Book_store",
-    "order_id":"%s"
+    "order_id":"%s",
+    "result_url":"http://localhost:8080/callback.php",
     }',
     PUBLIC_KEY,
         getOrderTotal(),
         createOrder()
     ) ;
+
     return base64_encode( $data );
 }
 
+/**
+ * @return string
+ */
 function getSignature ()
 {
     return base64_encode( sha1( PRIVATE_KEY . getData() .  PRIVATE_KEY , true) );
+}
+
+/**
+ * @param  string  $data
+ */
+function updateOrder (string $data)
+{
+    $paymentData = json_decode(base64_decode($data), true);
+//    var_dump($_SESSION);
+//    die();
+    $_SESSION['orderId'] = $paymentData['order_id'];
+    $_SESSION['amount']= $paymentData['amount'];
+    $_SESSION['status'] = $paymentData['status'] == 'failure' ? 'failed' : $paymentData['status'];
+    $sql = 'UPDATE `order` SET `status` = :status, amount = :amount WHERE order_id = :order_id';
+    $pdo = getPDO();
+    try {
+        $stmt = $pdo->prepare($sql);
+        $stmt ->execute([
+            'status' => $_SESSION['status'],
+            'amount' => $_SESSION['amount'],
+            'order_id' => $_SESSION['orderId']
+        ]);
+    } catch (PDOException $e) { }
+
+    if ($_SESSION['status'] == 'success' ){
+        setcookie('cart', '', time() -100, '/');
+    }
+
+//    header("Location: ../index.php" );
+}
+
+function getPaymentStationMessage ()
+{
+    if (!empty($_SESSION['orderId'])) {
+        $sql = 'SELECT *FROM `order` WHERE order_id = ?';
+        $pdo = getPDO();
+        $stmt = $pdo->prepare($sql);
+        $stmt -> execute ([$_SESSION['orderId']]);
+        $order = $stmt -> fetch( PDO::FETCH_ASSOC);
+        if ($_SESSION['status'] === 'success') {
+            $message = sprintf("Заказ на сумму %s оплачен", $order['amount']);
+        }
+        else {
+            $message = sprintf("При заказе произошла ошибка, заказ на сумму %s  не оплачен", $order['amount']);
+        }
+        $message .= "
+        <script>
+        $('#exampleModalCenter').modal('show')
+        </script>
+        ";
+        return $message;
+    }
 }
