@@ -31,12 +31,12 @@ function getBooks(array $ids = [], int $itemsPerPage = ITEMS_PER_PAGE): array
     $page = getPageNumber();
     $offset = ($page - 1) * ITEMS_PER_PAGE;
     $query = "
-select b.id 'idBook', b.title 'titleBook', b.coast 'coastBook', a.name 'authorBook', g.name 'genreBook', IFNULL(c.rating, '0') 'commentRating'  from `bookstore`.`book` b
-join bookstore.author a on a.id = b.author_id
-join genre g on g.id = b.genre_id
-left join comment c on c.comment_id = b.id
-%s
-ORDER BY b.title LIMIT $offset, ".$itemsPerPage.";";
+        select b.id 'idBook', b.title 'titleBook', b.coast 'coastBook', a.name 'authorBook', g.name 'genreBook', IFNULL(c.rating, '0') 'commentRating'  from `bookstore`.`book` b
+        join bookstore.author a on a.id = b.author_id
+        join genre g on g.id = b.genre_id
+        left join comment c on c.comment_id = b.id
+        %s
+        ORDER BY b.title LIMIT $offset, ".$itemsPerPage.";";
 
     $where = '';
 
@@ -77,11 +77,11 @@ function getBooksByID($bookId): array
 {
     $bookId = htmlspecialchars($bookId);
     $query = "
-select b.id 'idBook', b.title 'titleBook', b.coast 'coastBook', a.name 'authorBook', g.name 'genreBook', g.id 'genreBookId', AVG(IFNULL(c.rating, '0')) 'commentRating'  from bookstore.book b
-join bookstore.author a on a.id = b.author_id
-join genre g on g.id = b.genre_id
-left join comment c on c.book_id = b.id
-where b.id =  ? ;
+        select b.id 'idBook', b.title 'titleBook', b.coast 'coastBook', a.name 'authorBook', g.name 'genreBook', g.id 'genreBookId', AVG(IFNULL(c.rating, '0')) 'commentRating'  from bookstore.book b
+        join bookstore.author a on a.id = b.author_id
+        join genre g on g.id = b.genre_id
+        left join comment c on c.book_id = b.id
+        where b.id =  ? ;
 ";
 
     return sendQuery($query, [$bookId])->fetch(PDO::FETCH_ASSOC);
