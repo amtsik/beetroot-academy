@@ -53,31 +53,22 @@ $filters = new pagination();
                         <h6 class="m-0 font-weight-bold text-primary col">Таблица заказов</h6>
                         <div class="btn-group col-lg-2">
 
-                            <?= $filters->getSizeFilter() ?>
+                            <?= $filters -> getSizeFilter () ?>
 
                         </div>
                     </div>
-
 
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>№ заказа</th>
-                                    <th>Название книги</th>
-                                    <th>Статус заказа</th>
-                                    <th>Дата заказа</th>
-                                    <th>Стоимость заказа</th>
+                                    <?= $tables -> getTableHead () ?>
                                 </tr>
                                 </thead>
                                 <tfoot>
                                 <tr>
-                                    <th>№ заказа</th>
-                                    <th>Название книги</th>
-                                    <th>Статус заказа</th>
-                                    <th>Дата заказа</th>
-                                    <th>Стоимость заказа</th>
+                                    <?= $tables -> getTableHead () ?>
                                 </tr>
                                 </tfoot>
                                 <tbody>

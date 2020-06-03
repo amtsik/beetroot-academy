@@ -65,7 +65,12 @@ session_start();
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item "></li>
                 <li class="nav-item ">
+                    <a class="nav-link"
+                       href="../admin/index.php">Admin
+                    </a>
+                </li>
                 <li class="nav-item <?= $_SERVER['REQUEST_URI'] === '/index.php' ? 'active' : '' ?>">
                     <a class="nav-link"
                        href="../index.php">Home
@@ -73,8 +78,8 @@ session_start();
                 </li>
                 <li class="nav-item <?= $_SERVER['REQUEST_URI'] === '/page.php' ? 'active' : '' ?>">
                     <a class="nav-link"
-                        href="../page.php">
-                        pagephp
+                        href="../page.php?book_id=2">
+                        Pagephp
                     </a>
                 </li>
 

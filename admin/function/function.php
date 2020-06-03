@@ -20,7 +20,7 @@ define(
 );
 
 function getEarningsAnnual (){
-    $sql = 'SELECT month(added_at) nmth, sum(amount) from `order` group by nmth
+    $sql = 'SELECT month(added_at) nmth, sum(amount) amount from `order` group by nmth
         order by nmth desc limit 1;';
     $pdo = getPDO();
     $stmt = $pdo->query($sql);
@@ -50,8 +50,8 @@ function getLastMonthEarnings (){
 }
 
 function getBestMonthEarnings (){
-    $sql = 'SELECT month(added_at) nmth, sum(amount) from `order` group by nmth
-        order by sum(amount) desc limit 1;';
+    $sql = 'SELECT month(added_at) nmth, sum(amount) amount from `order` group by nmth
+        order by amount desc limit 1;';
     $pdo = getPDO();
     $stmt = $pdo->query($sql);
     return $stmt->fetch(PDO::FETCH_ASSOC);

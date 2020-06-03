@@ -1,19 +1,43 @@
 <?php
 declare(strict_types=1);
 
+/**
+ * Class addTestOrders
+ */
 class addTestOrders
 {
+    /**
+     * @var PDO
+     */
     private $pdo;
+    /**
+     * @var
+     */
     private $sql;
+    /**
+     * @var
+     */
     private $date;
+    /**
+     * @var
+     */
     private $amount;
+    /**
+     * @var
+     */
     private $status;
 
+    /**
+     * addTestOrders constructor.
+     */
     public function __construct()
     {
         $this->pdo = getPDO();
     }
 
+    /**
+     *
+     */
     public function addOrders()
     {
         for ($i = 1; $i <= 50; $i++) {
@@ -27,16 +51,25 @@ class addTestOrders
         die("finished addOrders");
     }
 
+    /**
+     *
+     */
     private function getDate()
     {
         $this->date = date('Y-m-d H-i-s', rand(mktime(0, 0, 0, 1, 1, 2020), mktime($is_dst = 0)));
     }
 
+    /**
+     *
+     */
     private function getAmount()
     {
         $this->amount = rand(0, 100000) / 100;
     }
 
+    /**
+     *
+     */
     private function getStatus()
     {
         $status = 'pending';
@@ -49,6 +82,9 @@ class addTestOrders
         $this->status = $status;
     }
 
+    /**
+     *
+     */
     private function addLineInOrderTable()
     {
         $date = $this->date;
@@ -66,6 +102,9 @@ class addTestOrders
         $this->querySql();
     }
 
+    /**
+     *
+     */
     private function addLineInOrderBookTable()
     {
         $orderId = $this->pdo->lastInsertId();
@@ -83,6 +122,9 @@ class addTestOrders
         }
     }
 
+    /**
+     *
+     */
     private function querySql()
     {
         $this->pdo->query($this->sql);
