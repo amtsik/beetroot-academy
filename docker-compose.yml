@@ -1,19 +1,38 @@
-version: "3.3"
+version: "3.8"
 volumes:
   mysql-data:
 services:
   php:
-    ports:
-      - "8082:80"
     build:
       context: .
       dockerfile: ./environment/php/Dockerfile
     volumes:
-      - .:/var/www/html
+      - ./www:/var/www/html
       - /var/www/html/var/cache
-#    environment:
-#      XDEBUG_CONFIG: "remote_host=host.docker.internal remote_enable=1 remote_autostart=off  remote_port=9000"
-#      PHP_IDE_CONFIG: "serverName=Docker_blog"
+
+#  httpd:
+#    ports:
+#      - "8082:80"
+#    depends_on:
+#      - php
+#    build:
+#      context: .
+#      dockerfile: ./environment/httpd/Dockerfile
+#    volumes:
+#      - ./www:/var/www/html
+#      - /var/www/html/var/cache
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./environment/nginx/Dockerfile
+    #    command: [httpd-debug, '-g', 'daemon off;']
+    volumes:
+      - ./www:/var/www/html
+    ports:
+      - 8082:80
+    depends_on:
+      - php
 
   mysql:
     image: mysql:5.7
@@ -24,6 +43,6 @@ services:
       MYSQL_USER: $DB_USER
       MYSQL_PASSWORD: $DB_PASS
       MYSQL_DATABASE: $DB_NAME
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
     volumes:
-      - mysql-data:/var/lib/mysqlphp
+      - mysql-data:/var/lib/mysql
