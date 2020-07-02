@@ -19,7 +19,7 @@ RUN pecl install xdebug-2.8.1 \
 #   && a2enmod rewrite \
    && docker-php-ext-install pdo_mysql intl zip opcache
 
-COPY .env /var/www/html
+#COPY .env /var/www/html
 COPY ./environment/php/php.ini $PHP_INI_DIR/php.ini
 
 #RUN usermod -u ${USER_ID} www-data && groupmod -g ${GROUP_ID} www-data
