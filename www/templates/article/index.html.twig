@@ -38,19 +38,9 @@
                         </a>
                         <p class="post-meta">Posted by
                             <a href="#">Start Bootstrap</a>
-                            on September 24, 2019</p>
+                            on {{ article.createdAt|date("F j Y") }}</p>
                     </div>
                     <hr>
-
-                    <tr>
-                        <td>{{ article.id }}</td>
-                        <td>{{ article.title }}</td>
-                        <td>{{ article.body }}</td>
-                        <td>
-                            <a href="{{ path('article_show', {'id': article.id}) }}">show</a>
-                            <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>
-                        </td>
-                    </tr>
                 {% else %}
                     <tr>
                         <td colspan="4">no records found</td>
@@ -67,5 +57,5 @@
 
     <hr>
 
-    <a href="{{ path('article_new') }}">Create new</a>
+{#    <a href="{{ path('article_new') }}">Create new</a>#}
 {% endblock %}
