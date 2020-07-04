@@ -15,6 +15,7 @@ class ArticleType extends AbstractType
             ->add('title')
             ->add('body')
             ->add('category')
+            ->add('tags')
         ;
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\Comment;
 use App\Form\CommentType;
 use App\Repository\CommentRepository;
@@ -17,9 +18,9 @@ class CommentController extends AbstractController
 {
 
     /**
-     * @Route("/new", name="comment_new", methods={"POST"})
+     * @Route("/new/{id}", name="comment_new", methods={"POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Article $article): Response
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
@@ -27,10 +28,11 @@ class CommentController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $comment->setArticle($article);
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->redirectToRoute('comment_index');
+            return $this->redirectToRoute('article_show', ['id' => $article->getId()]);
         }
 
         return $this->render('comment/new.html.twig', [
@@ -38,6 +40,7 @@ class CommentController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
 
     /**
      * @Route("/{id}/edit", name="comment_edit", methods={"GET","POST"})
