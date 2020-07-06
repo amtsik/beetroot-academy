@@ -2,7 +2,7 @@
 
 <div class="card">
     <div class="card-body">
-        {% for comment in article.comments %}
+        {% for comment in article.getTopComments %}
             <div class="card">
                 <div class="card-body row">
                     <div class="col-md-2">
@@ -25,7 +25,7 @@
                         <p>{{ comment.body }}</p>
                         <p>
                         <div class="fb-like"
-                             data-href="http://localhost:8082"
+                             data-href="{{ fb_domain }}"
                              data-width=""
                              data-layout="button_count"
                              data-action="like"
@@ -34,10 +34,47 @@
                         >
                         </div>
 {#                            <a class="float-right btn text-white btn-danger"> <i class="fa fa-heart"></i> Like</a>#}
+                        <form name="comment" method="post" action="{{ path('add_reply', {'id' : article.id, 'commentId' : comment.id}) }}">
+                            <div class="form-group row text-center">
+                                <label for="exampleFormControlTextarea1" class="text-center">Ответить</label>
+                                <textarea id="comment_body" name="comment[body]" required="required" class="form-control" rows="3"></textarea>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-10">
+                                    <button class="btn btn-primary">Ответить</button>
+                                </div>
+                            </div>
+                            <input type="hidden" id="comment__token" name="comment[token]" value="{{ csrf_token('comment-token') }}">
+                        </form>
+
+
                         </p>
                     </div>
+
+                    {% for subcomment in comment.getComments %}
+                        <div class="card card-inner">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/>
+                                        <p class="text-secondary text-center">15 Minutes Ago</p>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <p><a href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>Maniruzzaman Akash</strong></a></p>
+                                        <p>{{ subcomment.body }}</p>
+                                        <p>
+                                            <a class="float-right btn btn-outline-primary ml-2">  <i class="fa fa-reply"></i> Reply</a>
+                                            <a class="float-right btn text-white btn-danger"> <i class="fa fa-heart"></i> Like</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
+        {% else %}
+            Статью еще никто не комментировал
         {% endfor %}
     </div>
 </div>

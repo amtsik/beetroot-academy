@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Entity\Category;
 use App\Entity\Comment;
+use App\Entity\Tag;
 use App\Form\ArticleType;
 use App\Form\CommentType;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\TagRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -61,9 +63,22 @@ class ArticleController extends AbstractController
         $form = $this->createForm(CommentType::class, new Comment());
         return $this->render('article/show.html.twig', [
             'article' => $article,
+//            'tags' => $tag,
             'form'    => $form->createView()
         ]);
 
+    }
+
+    /**
+     * @Route("/article/tag/{id}", name="article_tag_show", methods={"GET","POST"})
+     */
+    public function showTag(ArticleRepository $articleRepository, CategoryRepository $categoryRepository, TagRepository $tagRepository): Response
+    {
+        return $this->render('tag/index.html.twig', [
+            'articles' => $articleRepository->findAll(),
+            'categories' => $categoryRepository->findAll(),
+            'tags' => $tagRepository->findAll()
+        ]);
     }
 
 //    /**
@@ -93,7 +108,7 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/admin/article/{id}/edit", name="article_edit", methods={"GET","POST"})
+     * @Route("/article/{id}/edit", name="article_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Article $article): Response
     {

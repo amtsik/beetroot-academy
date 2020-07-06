@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Tag;
 use App\Form\TagType;
 use App\Repository\TagRepository;
@@ -53,8 +54,10 @@ class TagController extends AbstractController
      */
     public function show(Tag $tag): Response
     {
-        return $this->render('tag/show.html.twig', [
-            'tag' => $tag,
+//        die(var_dump($tag->getArticles()));
+
+        return $this->render('article/index.html.twig', [
+            'articles' => $tag->getArticles()
         ]);
     }
 

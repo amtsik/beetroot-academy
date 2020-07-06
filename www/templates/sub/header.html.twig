@@ -7,11 +7,14 @@
             <i class="fas fa-bars"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
+
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    {% include 'sub/search.thml.twig' %}
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/">Все статьи</a>
                 </li>
-
                 {% for category in navigation.getMenu %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('flows_show', {'id': category.id}) }}">{{ category.title }}</a>

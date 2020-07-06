@@ -1,4 +1,4 @@
-{{ form_start(form, {'action': path('comment_new', {'id': article.id})}) }}
+{{ form_start(form, {'action': path('comment_new', {'id': article.id})}, {'attr': {'class': 'col-md-12'}} ) }}
 {#    {{ form_label(form, 'Комментарий', {'label_attr': {'class': 'foo'}}) }}#}
 {#    {{ form_widget(form.body, {'attr': {'class': '', 'rows' : '3'}}) }}#}
 {#    <div class="">Рейтинг</div>#}

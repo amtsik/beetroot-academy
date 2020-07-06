@@ -30,7 +30,7 @@ class Tag
     private $color;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Article::class, mappedBy="tads")
+     * @ORM\ManyToMany(targetEntity=Article::class, mappedBy="tags")
      */
     private $articles;
 
@@ -85,7 +85,7 @@ class Tag
     {
         if (!$this->articles->contains($article)) {
             $this->articles[] = $article;
-            $article->addTad($this);
+            $article->addTag($this);
         }
 
         return $this;
@@ -95,7 +95,7 @@ class Tag
     {
         if ($this->articles->contains($article)) {
             $this->articles->removeElement($article);
-            $article->removeTad($this);
+            $article->removeTag($this);
         }
 
         return $this;

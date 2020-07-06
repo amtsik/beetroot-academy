@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -138,6 +140,13 @@ class Article
     public function getComments(): Collection
     {
         return $this->comments;
+    }
+
+    public function getTopComments() : Collection
+    {
+        $criteria = Criteria::create()->where(new Comparison('replyTo', Comparison::IS, null));
+
+         return $this->comments->matching($criteria);
     }
 
     public function addComment(Comment $comment): self

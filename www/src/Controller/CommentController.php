@@ -6,7 +6,9 @@ use App\Entity\Article;
 use App\Entity\Comment;
 use App\Form\CommentType;
 use App\Repository\CommentRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,6 +42,34 @@ class CommentController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/reply/{id}/{commentId}", name="add_reply", methods={"POST"})
+     * @ParamConverter("comment", options={"id" = "commentId"})
+     */
+    public function addReply(Request $request, Article $article, Comment $comment): Response
+    {
+        $submittedToken = $request->request->get('comment')['token'];
+
+        // 'delete-item' is the same value used in the template to generate the token
+        if ($this->isCsrfTokenValid('comment-token', $submittedToken)) {
+            // ... do something, like deleting an object
+            throw new BadRequestException('CSRF token');
+        }
+
+
+        $reply = new Comment();
+        $entityManager = $this->getDoctrine()->getManager();
+        $reply->setArticle($article);
+        $reply->setReplyTo($comment);
+        $body = $request->request->get('comment')['body'];
+        $reply->setBody($body);
+        $entityManager->persist($reply);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('article_show', ['id' => $article->getId()]);
+    }
+
 
 
     /**
