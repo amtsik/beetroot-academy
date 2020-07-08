@@ -52,7 +52,7 @@ class CommentController extends AbstractController
         $submittedToken = $request->request->get('comment')['token'];
 
         // 'delete-item' is the same value used in the template to generate the token
-        if ($this->isCsrfTokenValid('comment-token', $submittedToken)) {
+        if (!$this->isCsrfTokenValid('comment-token', $submittedToken)) {
             // ... do something, like deleting an object
             throw new BadRequestException('CSRF token');
         }

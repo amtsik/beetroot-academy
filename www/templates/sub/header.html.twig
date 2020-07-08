@@ -1,8 +1,10 @@
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav" style="background-color: #AEAEAE;">
     <div class="container">
         <a class="navbar-brand" href="/">Logo</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
             Menu
             <i class="fas fa-bars"></i>
         </button>
@@ -17,12 +19,39 @@
                 </li>
                 {% for category in navigation.getMenu %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('flows_show', {'id': category.id}) }}">{{ category.title }}</a>
+                        <a class="nav-link"
+                           href="{{ path('flows_show', {'id': category.id}) }}">{{ category.title }}</a>
                     </li>
                 {% else %}
 
                 {% endfor %}
 
+                <li class="nav-item dropdown">
+
+
+                    {% if is_granted('ROLE_USER') %}
+
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ app.user.getName }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <div class="nav-item">
+                                <a class="nav-link" href="#">{{ app.user.getName }}</a>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="nav-item">
+                                <a class="nav-link" href="#">{{ app.user.email }}</a>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-item">
+                                <a class="nav-link" href="{{ path('app_logout') }}">выйти</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a class="nav-link" href="{{ path('app_login') }}">войти</a>
+                    {% endif %}
+                </li>
             </ul>
         </div>
     </div>

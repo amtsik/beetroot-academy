@@ -58,7 +58,8 @@
                 <div class="col-lg-8 col-md-10 mx-auto">
                     <div class="bd-example">
                         {% for tag in article.tags %}
-                            <a href="{{ path('tag_show', {'id': tag.id}) }}" class="badge {{ tag.color }}">#{{ tag }}</a>
+                            <a href="{{ path('tag_show', {'id': tag.id}) }}"
+                               class="badge {{ tag.color }}">#{{ tag }}</a>
                         {% endfor %}
                     </div>
                     {#        {{ dump (tag) }}#}
@@ -72,12 +73,13 @@
     {#    <a href="{{ path('article_index') }}">back to list</a>#}
     <hr>
 
-    <div class="container">
-        {{ include('article/sub/comment.thml.twig') }}
-        <hr>
-        {{ comment_form | raw }}
-
-    </div>
+    {% if is_granted('ROLE_USER') %}
+        <div class="container">
+            {{ include('article/sub/comment.thml.twig') }}
+            <hr>
+            {{ comment_form | raw }}
+        </div>
+    {% endif %}
 
     {#    <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>#}
 

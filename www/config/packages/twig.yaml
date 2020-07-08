@@ -3,4 +3,5 @@ twig:
     globals:
         # the value is the service's id
         navigation: '@App\Service\Page\Navigation'
+        user_provider: '@App\Service\User\UserProvider'
         fb_domain: '%app.fb_domain%'
