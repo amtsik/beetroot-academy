@@ -62,9 +62,20 @@ class User implements UserInterface
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $avatar;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default": 1})
+     */
+    private $is_subscribe = 1;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->avatar = '/img/post-sample-image.jpg';
     }
 
     public function getId(): ?int
@@ -192,6 +203,30 @@ class User implements UserInterface
                 $comment->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): self
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getIsSubscribe(): ?bool
+    {
+        return $this->is_subscribe;
+    }
+
+    public function setIsSubscribe(bool $is_subscribe): self
+    {
+        $this->is_subscribe = $is_subscribe;
 
         return $this;
     }

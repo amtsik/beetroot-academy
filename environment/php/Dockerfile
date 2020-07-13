@@ -6,7 +6,9 @@ RUN apt update \
       wget \
       zlib1g-dev \
       libzip-dev \
-      openssh-client
+      openssh-client\
+      vim\
+      cron
 
 RUN curl -s https://getcomposer.org/installer > composer-setup.php \
        && php composer-setup.php --install-dir=/usr/bin --filename=composer \
