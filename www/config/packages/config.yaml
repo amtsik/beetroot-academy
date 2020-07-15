@@ -1,0 +1,15 @@
+#  Symfony Froala WYSIWYG Editor
+# https://froala.com/wysiwyg-editor/docs/framework-plugins/symfony/
+kms_froala_editor:
+
+  language: "ru"
+  toolbarInline: true
+  tableColors: [ "#FFFFFF", "#FF0000" ]
+  saveParams: { "id": "myEditorField" }
+  # Change the froala base path.
+  # Usage: let me know, I don't think it's usefull.
+  basePath: "/admin/kmsfroalaeditor"
+
+  # Custom JS file.
+  # Usage: add custom plugins/buttons...
+#  customJS: "/custom/js/path"

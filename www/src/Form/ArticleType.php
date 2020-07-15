@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Article;
+use KMS\FroalaEditorBundle\Form\Type\FroalaEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,7 +14,8 @@ class ArticleType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('body')
+//            ->add('body')
+            ->add( 'body', FroalaEditorType::class )
             ->add('category')
             ->add('tags')
         ;

@@ -13,4 +13,7 @@ return [
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true, 'test' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     SymfonyCasts\Bundle\VerifyEmail\SymfonyCastsVerifyEmailBundle::class => ['all' => true],
+//  Symfony Froala WYSIWYG Editor
+//  https://froala.com/wysiwyg-editor/docs/framework-plugins/symfony/
+    KMS\FroalaEditorBundle\KMSFroalaEditorBundle::class => ['all' => true],
 ];

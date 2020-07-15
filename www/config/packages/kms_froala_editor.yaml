@@ -1,0 +1,18 @@
+twig:
+    form_themes:
+        - '@KMSFroalaEditor/Form/froala_widget.html.twig'
+
+
+kms_froala_editor:
+    language: "ru"
+    toolbarInline: true
+    tableColors: [ "#FFFFFF", "#FF0000" ]
+    saveParams: { "id": "myEditorField" }
+    # Change the froala base path.
+    # Usage: let me know, I don't think it's usefull.
+    basePath: "/admin/kmsfroalaeditor"
+    fileUpload: false
+    imagePaste: false
+
+#    includeJS: false
+#    includeCSS: false
